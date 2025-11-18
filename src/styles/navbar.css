@@ -1,0 +1,172 @@
+/* ===== OPCIÓN 1: Imagen de fondo con gradiente overlay ===== */
+.navbar {
+    /* 👇 AQUÍ VA LA IMAGEN DE FONDO */
+    background:
+            url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600') center/cover;
+    /* El gradiente con transparencia (0.85) va PRIMERO, luego la imagen */
+
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+/* ===== OPCIÓN 2: Patrón geométrico de fondo ===== */
+.navbar-geometric {
+    background: #6366f1;
+    background-image:
+            repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);
+    padding: 1rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* ===== OPCIÓN 3: Gradiente animado ===== */
+.navbar-animated {
+    background: linear-gradient(-45deg, #6366f1, #8b5cf6, #ec4899, #3b82f6);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    padding: 1rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ===== OPCIÓN 4: Efecto glassmorphism ===== */
+.navbar-glass {
+    background: rgba(99, 102, 241, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* ===== Estilos comunes mejorados ===== */
+.navbar-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.05);
+}
+
+.navbar-logo h2 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navbar-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-avatar:hover {
+    transform: scale(1.1) rotate(5deg);
+    border-color: #fbbf24;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-username {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    transition: color 0.3s ease;
+}
+
+.navbar-username:hover {
+    color: #fbbf24;
+}
+
+.btn-logout {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    font-size: 0.9rem;
+}
+
+.btn-logout:hover {
+    background: white;
+    color: #6366f1;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Para dispositivos móviles ===== */
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 0 1rem;
+    }
+
+    .navbar-logo h2 {
+        font-size: 1.2rem;
+    }
+
+    .navbar-user {
+        gap: 0.8rem;
+    }
+
+    .navbar-username {
+        display: none;
+    }
+
+    .navbar-avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .btn-logout {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}

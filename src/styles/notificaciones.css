@@ -1,0 +1,219 @@
+/* Badge de notificaciones */
+.badge-notificaciones {
+    position: relative;
+}
+
+.btn-notificaciones {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-notificaciones:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.icono-campana {
+    font-size: 24px;
+    display: block;
+}
+
+.badge-numero {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #ff4444;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 18px;
+    text-align: center;
+    border: 2px solid white;
+}
+
+/* Dropdown */
+.dropdown-notificaciones {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 360px;
+    max-height: 480px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.lista-notificaciones-dropdown {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Header */
+.notificaciones-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notificaciones-header h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.btn-marcar-todas {
+    background: transparent;
+    border: none;
+    color: #1877f2;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.btn-marcar-todas:hover {
+    background: rgba(24, 119, 242, 0.1);
+}
+
+/* Body */
+.notificaciones-body {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+/* Item de notificación */
+.notificacion-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+    position: relative;
+}
+
+.notificacion-item:hover {
+    background: #f0f2f5;
+}
+
+.notificacion-item.no-leida {
+    background: #e7f3ff;
+}
+
+.notificacion-item.no-leida:hover {
+    background: #d9ebff;
+}
+
+.notificacion-icono {
+    font-size: 24px;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f2f5;
+    border-radius: 50%;
+}
+
+.notificacion-contenido {
+    flex: 1;
+    min-width: 0;
+}
+
+.notificacion-mensaje {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.notificacion-fecha {
+    font-size: 12px;
+    color: #65676b;
+}
+
+.punto-azul {
+    width: 10px;
+    height: 10px;
+    background: #1877f2;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Estados vacíos */
+.sin-notificaciones,
+.notificaciones-loading {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.icono-vacio {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.sin-notificaciones p,
+.notificaciones-loading p {
+    margin: 0;
+    color: #65676b;
+    font-size: 14px;
+}
+
+.spinner-small {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #1877f2;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 12px;
+}
+
+/* Scrollbar */
+.notificaciones-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notificaciones-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.notificaciones-body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.notificaciones-body::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .dropdown-notificaciones {
+        position: fixed;
+        top: 60px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+    }
+}

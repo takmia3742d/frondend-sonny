@@ -1,0 +1,297 @@
+.perfil-page {
+    min-height: 100vh;
+    background: #f0f2f5;
+}
+
+.perfil-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.perfil-contenido {
+    flex: 1;
+    margin: 20px;
+}
+
+/* Loading y Error */
+.perfil-loading,
+.perfil-error {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.perfil-error h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.btn-volver {
+    padding: 12px 24px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-volver:hover {
+    background: #5568d3;
+}
+
+/* Header del perfil */
+.perfil-header {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.perfil-portada {
+    height: 280px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+}
+
+.portada-gradient {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+.perfil-info-principal {
+    padding: 0 30px 30px;
+    position: relative;
+}
+
+.perfil-avatar-container {
+    position: absolute;
+    top: -80px;
+    left: 30px;
+}
+
+.perfil-avatar-grande {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 6px solid white;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.perfil-datos {
+    margin-top: 90px;
+    margin-left: 180px;
+}
+
+.perfil-datos h1 {
+    margin: 0 0 8px 0;
+    font-size: 32px;
+    color: #333;
+}
+
+.perfil-email {
+    margin: 0 0 12px 0;
+    color: #65676b;
+    font-size: 16px;
+}
+
+.perfil-bio {
+    margin: 0;
+    color: #333;
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 600px;
+}
+
+.btn-editar-perfil {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    padding: 10px 20px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: background 0.3s;
+}
+
+.btn-editar-perfil:hover {
+    background: #5568d3;
+}
+
+/* Estadísticas */
+.perfil-estadisticas {
+    display: flex;
+    gap: 20px;
+    background: white;
+    border-radius: 12px;
+    padding: 24px 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-right: 1px solid #e0e0e0;
+}
+
+.stat-item:last-child {
+    border-right: none;
+}
+
+.stat-numero {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 14px;
+    color: #65676b;
+}
+
+/* Publicaciones */
+.perfil-publicaciones {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.perfil-publicaciones h2 {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.lista-publicaciones-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sin-publicaciones-perfil {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.sin-publicaciones-perfil .icono-vacio {
+    font-size: 64px;
+    display: block;
+    margin-bottom: 16px;
+    opacity: 0.3;
+}
+
+.sin-publicaciones-perfil p {
+    margin: 0;
+    color: #65676b;
+    font-size: 16px;
+}
+
+/* Modal de edición */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal-editar {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-editar h3 {
+    margin: 0 0 20px 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.btn-cerrar-modal {
+    width: 100%;
+    padding: 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.btn-cerrar-modal:hover {
+    background: #5568d3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .perfil-portada {
+        height: 180px;
+    }
+
+    .perfil-avatar-grande {
+        width: 120px;
+        height: 120px;
+    }
+
+    .perfil-avatar-container {
+        top: -60px;
+        left: 20px;
+    }
+
+    .perfil-datos {
+        margin-top: 70px;
+        margin-left: 0;
+    }
+
+    .perfil-datos h1 {
+        font-size: 24px;
+    }
+
+    .btn-editar-perfil {
+        position: static;
+        margin-top: 16px;
+        width: 100%;
+    }
+
+    .perfil-estadisticas {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .stat-item {
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .stat-item:last-child {
+        border-bottom: none;
+    }
+}
