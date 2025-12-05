@@ -1,43 +1,51 @@
-// Primero instala react-icons si no lo tienes:
-// npm install react-icons
-
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useState, useEffect } from 'react';
-// Importar iconos de react-icons
 import { FiHome, FiUsers, FiMessageSquare, FiUser } from 'react-icons/fi';
 import { HiOutlineUserGroup } from 'react-icons/hi';
+import { API_URL } from '../../utils/constants'; // ✅ IMPORTAR
 import '../../styles/sidebar.css';
 
 function Sidebar() {
     const { usuario } = useAuth();
     const navigate = useNavigate();
     const [grupos, setGrupos] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const defaultAvatar = 'https://ui-avatars.com/api/?name=' +
         encodeURIComponent(usuario?.nombre || 'Usuario');
 
-    // Cargar grupos
     useEffect(() => {
-        const fetchGrupos = async () => {
+        const fetchGruposDelUsuario = async () => {
+            if (!usuario?.id) return;
             try {
-                const response = await fetch('/api/grupos');
-                const data = await response.json();
-                setGrupos(data);
+                setLoading(true);
+                // ✅ USAR API_URL
+                const response = await fetch(`${API_URL}/api/grupos/usuario/${usuario.id}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setGrupos(data);
+                } else {
+                    console.error('Error al cargar grupos:', response.status);
+                    setGrupos([]);
+                }
             } catch (error) {
                 console.error('Error al cargar grupos:', error);
-                // Grupos de ejemplo
-                setGrupos([
-                    { id: 1, nombre: 'Desarrollo Web', color: '#667eea' },
-                    { id: 2, nombre: 'Diseño UI/UX', color: '#764ba2' },
-                    { id: 3, nombre: 'Marketing Digital', color: '#f59e0b' },
-                    { id: 4, nombre: 'Emprendedores', color: '#10b981' }
-                ]);
+                setGrupos([]);
+            } finally {
+                setLoading(false);
             }
         };
+        fetchGruposDelUsuario();
+    }, [usuario?.id]);
 
-        fetchGrupos();
-    }, []);
+    const getGrupoColor = (index) => {
+        const colores = [
+            '#667eea', '#764ba2', '#f59e0b', '#10b981',
+            '#3b82f6', '#ef4444', '#8b5cf6', '#ec4899'
+        ];
+        return colores[index % colores.length];
+    };
 
     return (
         <aside className="sidebar">
@@ -47,7 +55,11 @@ function Sidebar() {
                 onClick={() => navigate('/perfil')}
             >
                 <img
-                    src={usuario?.fotoUrl || defaultAvatar}
+                    // ✅ USAR API_URL
+                    src={usuario?.fotoUrl
+                        ? `${API_URL}${usuario.fotoUrl}?t=${Date.now()}`
+                        : defaultAvatar
+                    }
                     alt={usuario?.nombre}
                     className="sidebar-avatar"
                     onError={(e) => { e.target.src = defaultAvatar; }}
@@ -66,7 +78,6 @@ function Sidebar() {
                     <FiHome className="nav-icon-svg" />
                     <span className="nav-text">Inicio</span>
                 </NavLink>
-
                 <NavLink
                     to="/grupos"
                     className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
@@ -74,7 +85,6 @@ function Sidebar() {
                     <FiUsers className="nav-icon-svg" />
                     <span className="nav-text">Grupos</span>
                 </NavLink>
-
                 <NavLink
                     to="/mensajes"
                     className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
@@ -82,7 +92,6 @@ function Sidebar() {
                     <FiMessageSquare className="nav-icon-svg" />
                     <span className="nav-text">Mensajes</span>
                 </NavLink>
-
                 <NavLink
                     to="/perfil"
                     className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
@@ -96,8 +105,12 @@ function Sidebar() {
             <div className="sidebar-grupos">
                 <h3 className="sidebar-section-title">Mis Grupos</h3>
                 <div className="grupos-lista">
-                    {grupos.length > 0 ? (
-                        grupos.map((grupo) => (
+                    {loading ? (
+                        <div className="grupos-loading">
+                            <p>Cargando grupos...</p>
+                        </div>
+                    ) : grupos.length > 0 ? (
+                        grupos.map((grupo, index) => (
                             <div
                                 key={grupo.id}
                                 className="grupo-item"
@@ -105,7 +118,7 @@ function Sidebar() {
                             >
                                 <div
                                     className="grupo-indicator"
-                                    style={{ backgroundColor: grupo.color }}
+                                    style={{ backgroundColor: getGrupoColor(index) }}
                                 ></div>
                                 <span className="grupo-nombre">{grupo.nombre}</span>
                             </div>
@@ -113,7 +126,13 @@ function Sidebar() {
                     ) : (
                         <div className="grupos-empty">
                             <HiOutlineUserGroup className="grupos-empty-icon" />
-                            <p className="grupos-empty-text">No tienes grupos aún</p>
+                            <p className="grupos-empty-text">No te has unido a ningún grupo</p>
+                            <button
+                                className="btn-unirse-grupo"
+                                onClick={() => navigate('/grupos')}
+                            >
+                                Explorar grupos
+                            </button>
                         </div>
                     )}
                 </div>

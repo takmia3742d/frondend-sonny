@@ -13,11 +13,15 @@ export const obtenerUsuarios = async () => {
     }
 };
 
-// Obtener usuario por ID
+/**
+ * ✅ CORREGIDO: Obtener usuario por ID
+ * Línea 18 - Template string con paréntesis correcto
+ */
 export const obtenerUsuarioPorId = async (usuarioId) => {
     try {
         console.log('📡 [usuarios.js] Obteniendo usuario ID:', usuarioId);
-        const response = await axios.get(`/api/usuarios/${usuarioId}`);  // ✅ Corregido
+        // ✅ CORREGIDO: backtick con paréntesis (no backtick directo)
+        const response = await axios.get(`/api/usuarios/${usuarioId}`);
         console.log('✅ [usuarios.js] Usuario obtenido:', response.data);
         return response.data;
     } catch (error) {
@@ -26,7 +30,10 @@ export const obtenerUsuarioPorId = async (usuarioId) => {
     }
 };
 
-// ✅ ACTUALIZAR PERFIL CON FOTO
+/**
+ * ✅ CORREGIDO: Actualizar perfil con foto
+ * Línea 47 - Template string y FormData correcto
+ */
 export const actualizarPerfil = async (usuarioId, formData) => {
     try {
         console.log('📤 [usuarios.js] Actualizando perfil ID:', usuarioId);
@@ -43,8 +50,12 @@ export const actualizarPerfil = async (usuarioId, formData) => {
         // ✅ Si hay foto (archivo real), agregarla
         if (formData.foto instanceof File) {
             data.append('foto', formData.foto);
+            console.log('📸 Foto incluida:', formData.foto.name);
+        } else {
+            console.log('ℹ️ Sin foto nueva');
         }
 
+        // ✅ CORREGIDO: Template string con paréntesis (backtick + paréntesis)
         const response = await axios.put(`/api/usuarios/${usuarioId}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -59,7 +70,10 @@ export const actualizarPerfil = async (usuarioId, formData) => {
     }
 };
 
-// ✅ CAMBIAR SOLO LA FOTO
+/**
+ * ✅ CORREGIDO: Cambiar solo la foto
+ * Línea 63 - Template string correcto
+ */
 export const cambiarFotoPerfil = async (usuarioId, archivo) => {
     try {
         console.log('📤 [usuarios.js] Cambiando foto ID:', usuarioId);
@@ -67,6 +81,7 @@ export const cambiarFotoPerfil = async (usuarioId, archivo) => {
         const formData = new FormData();
         formData.append('foto', archivo);
 
+        // ✅ CORREGIDO: Template string con paréntesis
         const response = await axios.put(`/api/usuarios/${usuarioId}/foto`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'

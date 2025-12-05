@@ -1,223 +1,283 @@
-/* Crear Publicación */
+/* PUBLICACIONES - TEMA OSCURO INSTAGRAM */
+
 .crear-publicacion {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: #000000;
+    border: 1px solid #262626;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    width: 100%;
 }
 
 .crear-publicacion-header {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .crear-publicacion-header h3 {
     margin: 0;
-    font-size: 18px;
-    color: #333;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 600;
 }
 
 .avatar {
-    width: 45px;
-    height: 45px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid #262626;
 }
 
 .crear-publicacion textarea {
     width: 100%;
-    padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 15px;
+    padding: 8px 0;
+    border: none;
+    font-size: 14px;
     font-family: inherit;
-    resize: vertical;
-    margin-bottom: 15px;
+    resize: none;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    min-height: 60px;
+    color: #ffffff;
+    background: transparent;
+    text-align: left;
 }
 
 .crear-publicacion textarea:focus {
     outline: none;
-    border-color: #667eea;
+}
+
+.crear-publicacion textarea::placeholder {
+    color: #737373;
 }
 
 .previsualizacion {
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000000;
 }
 
 .previsualizacion img,
 .previsualizacion video {
     width: 100%;
-    max-height: 400px;
-    object-fit: cover;
+    max-height: 500px;
+    object-fit: contain;
     border-radius: 8px;
+    background: #000000;
 }
 
 .btn-eliminar-preview {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
+    top: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffffff;
     border: none;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     cursor: pointer;
     font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btn-eliminar-preview:hover {
+    background: rgba(0, 0, 0, 0.95);
 }
 
 .crear-publicacion-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    padding-top: 12px;
+    border-top: 1px solid #262626;
 }
 
 .file-inputs {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .btn-file {
-    padding: 8px 16px;
-    background: #f0f0f0;
-    border-radius: 6px;
+    padding: 6px 12px;
+    background: transparent;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
-    transition: background 0.3s;
+    font-size: 13px;
+    border: none;
+    font-weight: 500;
+    color: #a8a8a8;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
 }
 
 .btn-file:hover {
-    background: #e0e0e0;
+    color: #ffffff;
 }
 
 .btn-publicar {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #0095f6;
     color: white;
     border: none;
-    padding: 10px 24px;
+    padding: 7px 16px;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s;
+    font-size: 14px;
+    transition: all 0.2s;
 }
 
 .btn-publicar:hover:not(:disabled) {
-    transform: translateY(-2px);
+    background: #1aa1f7;
 }
 
 .btn-publicar:disabled {
-    opacity: 0.5;
+    opacity: 0.3;
     cursor: not-allowed;
 }
 
-/* Tarjeta de Publicación */
+/* TARJETA DE PUBLICACIÓN */
+
 .publicacion-card {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: #000000;
+    border: 1px solid #262626;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    width: 100%;
 }
 
 .publicacion-header {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 15px;
+    padding: 14px 16px;
+    position: relative;
+}
+
+.publicacion-info {
+    flex: 1;
+    text-align: left;
 }
 
 .publicacion-info h4 {
     margin: 0;
-    font-size: 16px;
-    color: #333;
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
 }
 
 .publicacion-fecha {
-    font-size: 13px;
-    color: #999;
+    font-size: 12px;
+    color: #737373;
+    text-align: left;
+}
+
+.btn-eliminar-publicacion {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 4px;
+    opacity: 0;
+    color: #ffffff;
+    transition: all 0.2s;
+}
+
+.publicacion-card:hover .btn-eliminar-publicacion {
+    opacity: 1;
+}
+
+.btn-eliminar-publicacion:hover {
+    color: #ed4956;
+}
+
+.publicacion-contenido {
+    padding: 0 16px 8px;
+    text-align: left;
 }
 
 .publicacion-contenido p {
-    margin: 0 0 15px 0;
-    line-height: 1.6;
-    color: #333;
+    margin: 0;
+    line-height: 1.5;
+    color: #ffffff;
     white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 14px;
+    text-align: left;
 }
 
 .publicacion-media {
-    margin-bottom: 15px;
+    width: 100%;
+    background: #000000;
 }
 
 .publicacion-media img,
 .publicacion-media video {
     width: 100%;
-    max-height: 500px;
-    object-fit: cover;
-    border-radius: 8px;
+    max-height: 600px;
+    object-fit: contain;
+    display: block;
+    background: #000000;
 }
 
 .publicacion-actions {
     display: flex;
-    gap: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #f0f0f0;
-    align-items: center; /* ✅ AGREGAR */
+    gap: 16px;
+    padding: 6px 16px 12px;
+    border-top: 1px solid #262626;
 }
 
 .btn-action {
-    flex: 1;
-    padding: 10px;
-    background: #f8f8f8;
-    border: none;
-    border-radius: 20px; /* ✅ CAMBIAR de 6px a 20px */
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    transition: background 0.3s, transform 0.2s; /* ✅ AGREGAR transform */
-}
-
-.btn-action:hover {
-    background: #e8e8e8;
-    transform: scale(1.05); /* ✅ AGREGAR */
-}
-
-.btn-action:active {
-    transform: scale(0.95); /* ✅ AGREGAR */
-}
-
-/* Botón eliminar publicación */
-.publicacion-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: relative;
-}
-
-.btn-eliminar-publicacion {
-    position: absolute;
-    right: 0;
-    top: 0;
+    padding: 8px 0;
     background: transparent;
     border: none;
     cursor: pointer;
-    font-size: 18px;
-    opacity: 0.6;
-    transition: all 0.3s;
-    padding: 8px;
-    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.btn-eliminar-publicacion:hover:not(:disabled) {
-    opacity: 1;
-    background: #fee;
-    transform: scale(1.1);
+.btn-action:hover {
+    opacity: 0.5;
 }
 
-.btn-eliminar-publicacion:disabled {
-    cursor: not-allowed;
-    opacity: 0.3;
+.lista-publicaciones {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .crear-publicacion,
+    .publicacion-card {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .publicacion-media img,
+    .publicacion-media video {
+        max-height: 400px;
+    }
 }

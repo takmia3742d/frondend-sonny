@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { obtenerConversacion, enviarMensaje } from '../../api/mensajes';
 import { useAuth } from '../../hooks/useAuth';
+import { getAvatarUrl } from '../../utils/imageUtils'; // ✅ IMPORTAR
 import { formatearFechaRelativa } from '../../utils/formatters';
 import '../../styles/mensajes.css';
 
@@ -20,12 +21,12 @@ function ChatWindow({ usuarioSeleccionado }) {
         if (usuarioSeleccionado) {
             cargarMensajes();
 
-            // ✅ NUEVO: Recargar mensajes cada 3 segundos
+            // ✅ Recargar mensajes cada 3 segundos
             const interval = setInterval(() => {
-                cargarMensajes(true); // true = silencioso (sin loading)
+                cargarMensajes(true); // true = silencioso
             }, 3000);
 
-            return () => clearInterval(interval); // Limpiar al desmontar
+            return () => clearInterval(interval);
         }
     }, [usuarioSeleccionado]);
 
@@ -69,9 +70,6 @@ function ChatWindow({ usuarioSeleccionado }) {
         }
     };
 
-    const defaultAvatar = (nombre) =>
-        'https://ui-avatars.com/api/?name=' + encodeURIComponent(nombre || 'Usuario');
-
     if (!usuarioSeleccionado) {
         return (
             <div className="chat-window-vacio">
@@ -88,11 +86,14 @@ function ChatWindow({ usuarioSeleccionado }) {
         <div className="chat-window">
             {/* Header del chat */}
             <div className="chat-header">
+                {/* ✅ CORREGIDO: Usar getAvatarUrl() */}
                 <img
-                    src={usuarioSeleccionado.fotoUrl || defaultAvatar(usuarioSeleccionado.nombre)}
+                    src={getAvatarUrl(usuarioSeleccionado.fotoUrl, usuarioSeleccionado.nombre)}
                     alt={usuarioSeleccionado.nombre}
                     className="chat-header-avatar"
-                    onError={(e) => { e.target.src = defaultAvatar(usuarioSeleccionado.nombre); }}
+                    onError={(e) => {
+                        e.target.src = getAvatarUrl(null, usuarioSeleccionado.nombre);
+                    }}
                 />
                 <div className="chat-header-info">
                     <h3>{usuarioSeleccionado.nombre}</h3>
@@ -113,11 +114,14 @@ function ChatWindow({ usuarioSeleccionado }) {
                                 className={`mensaje ${esMio ? 'mensaje-mio' : 'mensaje-otro'}`}
                             >
                                 {!esMio && (
+                                    /* ✅ CORREGIDO: Usar getAvatarUrl() */
                                     <img
-                                        src={mensaje.emisor.fotoUrl || defaultAvatar(mensaje.emisor.nombre)}
+                                        src={getAvatarUrl(mensaje.emisor.fotoUrl, mensaje.emisor.nombre)}
                                         alt={mensaje.emisor.nombre}
                                         className="mensaje-avatar"
-                                        onError={(e) => { e.target.src = defaultAvatar(mensaje.emisor.nombre); }}
+                                        onError={(e) => {
+                                            e.target.src = getAvatarUrl(null, mensaje.emisor.nombre);
+                                        }}
                                     />
                                 )}
                                 <div className="mensaje-contenido">

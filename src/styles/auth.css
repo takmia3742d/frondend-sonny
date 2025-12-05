@@ -22,6 +22,34 @@ html {
     margin: 0;
     padding: 0;
 }
+.auth-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.auth-logo-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;  /* ✅ Circular */
+    object-fit: cover;
+    border: 3px solid #667eea;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.auth-logo-img:hover {
+    transform: scale(1.08) rotate(-5deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .auth-logo-img {
+        width: 70px;
+        height: 70px;
+    }
+}
 
 /* Contenedor Principal con Imagen de Fondo */
 .auth-container {
@@ -54,23 +82,21 @@ html {
     z-index: 0;
 }
 
-
-
 /* Card Glassmorphism - MÁS TRANSPARENTE */
 .auth-card {
     position: relative;
     z-index: 2;
     width: 100%;
     max-width: 450px;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
     border-radius: 24px;
     padding: 45px 40px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     box-shadow:
-            0 8px 32px 0 rgba(0, 0, 0, 0.37),
-            inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+            0 8px 32px 0 rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
     animation: fadeInUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
@@ -90,7 +116,7 @@ html {
     width: 80px;
     height: 80px;
     margin: 0 auto 20px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -99,24 +125,29 @@ html {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Títulos */
+/* Títulos - TEXTO BLANCO CON SOMBRA FUERTE */
 .auth-card h2 {
-    color: var(--text-light);
+    color: #ffffff;
     font-size: 32px;
     font-weight: 700;
     text-align: center;
     margin-bottom: 8px;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    text-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.5),
+            0 4px 8px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(0, 0, 0, 0.2);
     letter-spacing: -0.5px;
 }
 
 .auth-subtitle {
-    color: rgba(255, 255, 255, 0.95);
+    color: #ffffff;
     font-size: 15px;
     text-align: center;
     margin-bottom: 35px;
-    font-weight: 400;
-    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+    text-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.5),
+            0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Formulario */
@@ -133,47 +164,75 @@ html {
     gap: 8px;
 }
 
+/* Labels - TEXTO BLANCO CON SOMBRA */
 .form-group label {
-    color: rgba(255, 255, 255, 0.95);
+    color: #ffffff;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     margin-left: 4px;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    text-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.6),
+            0 1px 2px rgba(0, 0, 0, 0.4);
     letter-spacing: 0.3px;
 }
 
-/* Inputs con efecto glassmorphism */
-.form-group input {
+/* Inputs con fondo más opaco */
+.form-group input,
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="text"],
+.form-group textarea {
     width: 100%;
     padding: 15px 18px;
     font-size: 15px;
-    color: var(--text-dark);
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: var(--text-dark) !important;
+    -webkit-text-fill-color: var(--text-dark) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 2px solid rgba(255, 255, 255, 0.4);
     border-radius: 14px;
     outline: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-family: inherit;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
 }
 
-.form-group input::placeholder {
-    color: rgba(0, 0, 0, 0.4);
-    font-weight: 400;
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(0, 0, 0, 0.45) !important;
 }
 
-.form-group input:focus {
-    background: rgba(255, 255, 255, 0.98);
+.form-group input:focus,
+.form-group textarea:focus {
+    color: var(--text-dark) !important;
+    -webkit-text-fill-color: var(--text-dark) !important;
+    background: rgba(255, 255, 255, 1) !important;
     border-color: var(--primary-light);
     box-shadow:
             0 0 0 4px rgba(99, 102, 241, 0.15),
-            0 4px 20px rgba(0, 0, 0, 0.15);
+            0 4px 20px rgba(0, 0, 0, 0.25);
     transform: translateY(-2px);
 }
 
 .form-group input:hover:not(:focus) {
-    border-color: rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.98) !important;
+}
+
+/* Reglas específicas para autofill de Chrome/Safari */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--text-dark) !important;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.95) inset !important;
+    box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.95) inset !important;
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 /* Botón Primary con gradiente */
@@ -196,6 +255,7 @@ html {
     letter-spacing: 1px;
     position: relative;
     overflow: hidden;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .btn-primary::before {
@@ -264,28 +324,36 @@ html {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Footer */
+/* Footer - TEXTO BLANCO LEGIBLE */
 .auth-footer {
     text-align: center;
     margin-top: 30px;
-    color: rgba(255, 255, 255, 0.95);
+    color: #ffffff;
     font-size: 14px;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    text-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.6),
+            0 1px 2px rgba(0, 0, 0, 0.4);
+    font-weight: 500;
 }
 
 .auth-link {
-    color: var(--text-light);
+    color: #ffffff;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.3s ease;
-    padding: 2px 6px;
-    border-radius: 6px;
+    padding: 4px 8px;
+    border-radius: 8px;
     display: inline-block;
+    text-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.6),
+            0 1px 2px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .auth-link:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Spinner de carga */

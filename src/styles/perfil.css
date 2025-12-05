@@ -1,12 +1,14 @@
 .perfil-page {
     min-height: 100vh;
-    background: #f0f2f5;
+    background: #000;
+    padding-top: 65px;
 }
 
 .perfil-container {
     display: flex;
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
+    margin-left: 280px;
 }
 
 .perfil-contenido {
@@ -23,16 +25,17 @@
     align-items: center;
     justify-content: center;
     padding: 60px 20px;
+    color: #fff;
 }
 
 .perfil-error h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: #fff;
 }
 
 .btn-volver {
     padding: 12px 24px;
-    background: #667eea;
+    background: #0095f6;
     color: white;
     border: none;
     border-radius: 8px;
@@ -42,28 +45,29 @@
 }
 
 .btn-volver:hover {
-    background: #5568d3;
+    background: #0084d9;
 }
 
 /* Header del perfil */
 .perfil-header {
-    background: white;
+    background: #000;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     margin-bottom: 20px;
+    border: 1px solid #262626;
 }
 
 .perfil-portada {
     height: 280px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0095f6 0%, #0084d9 100%);
     position: relative;
 }
 
 .portada-gradient {
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
 }
 
 .perfil-info-principal {
@@ -81,9 +85,9 @@
     width: 160px;
     height: 160px;
     border-radius: 50%;
-    border: 6px solid white;
+    border: 6px solid #000;
     object-fit: cover;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .perfil-datos {
@@ -94,18 +98,19 @@
 .perfil-datos h1 {
     margin: 0 0 8px 0;
     font-size: 32px;
-    color: #333;
+    color: #fff;
+    font-weight: 700;
 }
 
 .perfil-email {
     margin: 0 0 12px 0;
-    color: #65676b;
+    color: #a8a8a8;
     font-size: 16px;
 }
 
 .perfil-bio {
     margin: 0;
-    color: #333;
+    color: #fff;
     font-size: 15px;
     line-height: 1.5;
     max-width: 600px;
@@ -116,7 +121,7 @@
     top: 20px;
     right: 30px;
     padding: 10px 20px;
-    background: #667eea;
+    background: #0095f6;
     color: white;
     border: none;
     border-radius: 8px;
@@ -127,25 +132,26 @@
 }
 
 .btn-editar-perfil:hover {
-    background: #5568d3;
+    background: #0084d9;
 }
 
 /* Estadísticas */
 .perfil-estadisticas {
     display: flex;
     gap: 20px;
-    background: white;
+    background: #000;
     border-radius: 12px;
     padding: 24px 30px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     margin-bottom: 20px;
+    border: 1px solid #262626;
 }
 
 .stat-item {
     flex: 1;
     text-align: center;
     padding: 12px;
-    border-right: 1px solid #e0e0e0;
+    border-right: 1px solid #262626;
 }
 
 .stat-item:last-child {
@@ -156,28 +162,29 @@
     display: block;
     font-size: 28px;
     font-weight: 700;
-    color: #667eea;
+    color: #0095f6;
     margin-bottom: 4px;
 }
 
 .stat-label {
     display: block;
     font-size: 14px;
-    color: #65676b;
+    color: #a8a8a8;
 }
 
 /* Publicaciones */
 .perfil-publicaciones {
-    background: white;
+    background: #000;
     border-radius: 12px;
     padding: 24px 30px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    border: 1px solid #262626;
 }
 
 .perfil-publicaciones h2 {
     margin: 0 0 20px 0;
     font-size: 20px;
-    color: #333;
+    color: #fff;
 }
 
 .lista-publicaciones-perfil {
@@ -200,7 +207,7 @@
 
 .sin-publicaciones-perfil p {
     margin: 0;
-    color: #65676b;
+    color: #a8a8a8;
     font-size: 16px;
 }
 
@@ -211,7 +218,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -219,24 +226,25 @@
 }
 
 .modal-editar {
-    background: white;
+    background: #000;
     border-radius: 12px;
     padding: 30px;
     max-width: 500px;
     width: 90%;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    border: 1px solid #262626;
 }
 
 .modal-editar h3 {
     margin: 0 0 20px 0;
     font-size: 24px;
-    color: #333;
+    color: #fff;
 }
 
 .btn-cerrar-modal {
     width: 100%;
     padding: 12px;
-    background: #667eea;
+    background: #0095f6;
     color: white;
     border: none;
     border-radius: 8px;
@@ -247,11 +255,21 @@
 }
 
 .btn-cerrar-modal:hover {
-    background: #5568d3;
+    background: #0084d9;
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+    .perfil-container {
+        margin-left: 80px;
+    }
+}
+
 @media (max-width: 768px) {
+    .perfil-container {
+        margin-left: 0;
+    }
+
     .perfil-portada {
         height: 180px;
     }
@@ -288,10 +306,11 @@
 
     .stat-item {
         border-right: none;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid #262626;
     }
 
     .stat-item:last-child {
         border-bottom: none;
     }
 }
+

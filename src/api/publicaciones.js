@@ -10,7 +10,6 @@ export const obtenerPublicaciones = async () => {
     }
 };
 
-// Crear publicación
 export const crearPublicacion = async (usuarioId, formData) => {
     try {
         const response = await axios.post(
@@ -28,7 +27,6 @@ export const crearPublicacion = async (usuarioId, formData) => {
     }
 };
 
-// Eliminar publicación
 export const eliminarPublicacion = async (publicacionId) => {
     try {
         const response = await axios.delete(`/api/publicaciones/${publicacionId}`);

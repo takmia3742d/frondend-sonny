@@ -86,13 +86,14 @@ function CrearPublicacion({ onPublicacionCreada }) {
             {error && <div className="error-message">{error}</div>}
 
             <form onSubmit={handleSubmit}>
-        <textarea
-            value={contenido}
-            onChange={(e) => setContenido(e.target.value)}
-            placeholder={`¿Qué estás pensando, ${usuario?.nombre}?`}
-            rows="4"
-            disabled={loading}
-        />
+                <textarea
+                    value={contenido}
+                    onChange={(e) => setContenido(e.target.value)}
+                    maxLength={1000}
+                    placeholder={`¿Qué estás pensando, ${usuario?.nombre}?`}
+                    rows="4"
+                    disabled={loading}
+                />
 
                 {previsualizacion && (
                     <div className="previsualizacion">

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { eliminarPublicacion } from '../../api/publicaciones';
-import { UPLOADS_URL } from '../../utils/constants';
+import { API_URL } from '../../utils/constants'; // ✅ IMPORTAR
 import { formatearFechaRelativa } from '../../utils/formatters';
 import BotonLike from '../likes/BotonLike';
 import ListaComentarios from '../comentarios/ListaComentarios';
@@ -17,7 +17,6 @@ function PublicacionCard({ publicacion, onActualizar }) {
     const defaultAvatar = 'https://ui-avatars.com/api/?name=' +
         encodeURIComponent(publicacion.usuario?.nombre || 'Usuario');
 
-    // Verificar si es mi publicación
     const esMiPublicacion = publicacion.usuario?.id === usuario?.id;
 
     const irAlPerfil = () => {
@@ -28,7 +27,6 @@ function PublicacionCard({ publicacion, onActualizar }) {
         if (!window.confirm('¿Estás seguro de que deseas eliminar esta publicación?')) {
             return;
         }
-
         setEliminando(true);
         try {
             await eliminarPublicacion(publicacion.id);
@@ -46,7 +44,11 @@ function PublicacionCard({ publicacion, onActualizar }) {
         <div className="publicacion-card">
             <div className="publicacion-header">
                 <img
-                    src={publicacion.usuario?.fotoUrl || defaultAvatar}
+                    // ✅ USAR API_URL
+                    src={publicacion.usuario?.fotoUrl
+                        ? `${API_URL}${publicacion.usuario.fotoUrl}?t=${Date.now()}`
+                        : defaultAvatar
+                    }
                     alt={publicacion.usuario?.nombre}
                     className="avatar"
                     onClick={irAlPerfil}
@@ -61,11 +63,9 @@ function PublicacionCard({ publicacion, onActualizar }) {
                         {publicacion.usuario?.nombre}
                     </h4>
                     <span className="publicacion-fecha">
-                        {formatearFechaRelativa(publicacion.fechaCreacion)}
-                    </span>
+                       {formatearFechaRelativa(publicacion.fechaCreacion)}
+                   </span>
                 </div>
-
-                {/* ✅ NUEVO: Botón eliminar (solo si es mi publicación) */}
                 {esMiPublicacion && (
                     <button
                         className="btn-eliminar-publicacion"
@@ -82,20 +82,31 @@ function PublicacionCard({ publicacion, onActualizar }) {
                 <p>{publicacion.contenido}</p>
             </div>
 
+            {/* ✅ USAR API_URL */}
             {publicacion.imagenUrl && (
                 <div className="publicacion-media">
                     <img
-                        src={`${UPLOADS_URL}${publicacion.imagenUrl}`}
+                        src={`${API_URL}${publicacion.imagenUrl}`}
                         alt="Publicación"
+                        style={{ cursor: 'default' }}
+                        onError={(e) => {
+                            console.error('❌ Error cargando imagen:', e.target.src);
+                            e.target.style.display = 'none';
+                        }}
                     />
                 </div>
             )}
 
+            {/* ✅ USAR API_URL */}
             {publicacion.videoUrl && (
                 <div className="publicacion-media">
                     <video
-                        src={`${UPLOADS_URL}${publicacion.videoUrl}`}
+                        src={`${API_URL}${publicacion.videoUrl}`}
                         controls
+                        onError={(e) => {
+                            console.error('❌ Error cargando video:', e.target.src);
+                            e.target.style.display = 'none';
+                        }}
                     />
                 </div>
             )}

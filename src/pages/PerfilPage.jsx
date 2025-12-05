@@ -3,63 +3,36 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { obtenerUsuarioPorId } from '../api/usuarios';
 import { obtenerPublicacionesPorUsuario } from '../api/publicaciones';
+import { getAvatarUrl } from '../utils/imageUtils';
 import Navbar from '../components/common/Navbar';
 import Sidebar from '../components/common/Sidebar';
 import PublicacionCard from '../components/publicaciones/PublicacionCard';
 import '../styles/perfil.css';
 import EditarPerfilModal from '../components/perfil/EditarPerfilModal';
 
-
 function PerfilPage() {
     const { id } = useParams();
     const { usuario: usuarioActual } = useAuth();
     const navigate = useNavigate();
 
-    // ✅ PRIMERO: Declarar todos los estados
     const [usuario, setUsuario] = useState(null);
     const [publicaciones, setPublicaciones] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [editando, setEditando] = useState(false);
+    const [avatarKey, setAvatarKey] = useState(0); // ✅ NUEVO: Para forzar recarga de imagen
 
-    console.log('=== DEPURACIÓN INICIO ===');
-    console.log('1. ID de URL:', id);
-    console.log('2. Usuario actual completo:', usuarioActual);
-    console.log('3. localStorage usuario:', localStorage.getItem('usuario'));
-    console.log('=== FIN DEPURACIÓN ===');
-
-    console.log('🔍 [PerfilPage] Renderizando con:', {
-        id_de_url: id,
-        usuarioActual,
-        usuarioActual_id: usuarioActual?.id
-    });
-
-    // ✅ SEGUNDO: Calcular usuarioId y esMiPerfil
     const usuarioId = id ? parseInt(id) : usuarioActual?.id;
     const esMiPerfil = usuarioId === usuarioActual?.id;
 
-    // ✅ TERCERO: Calcular defaultAvatar (ahora usuario ya está declarado)
-    const defaultAvatar = 'https://ui-avatars.com/api/?name=' +
-        encodeURIComponent(usuario?.nombre || usuarioActual?.nombre || 'Usuario');
-
-    console.log('🔍 [PerfilPage] IDs calculados:', {
-        usuarioId,
-        esMiPerfil,
-        tipo_usuarioId: typeof usuarioId
-    });
-
     useEffect(() => {
-        console.log('🔄 [PerfilPage] useEffect ejecutándose');
-
         if (!usuarioId) {
-            console.error('❌ [PerfilPage] No hay usuarioId disponible');
             setError('No se pudo identificar el usuario');
             setLoading(false);
             return;
         }
 
         if (isNaN(usuarioId)) {
-            console.error('❌ [PerfilPage] usuarioId no es un número:', usuarioId);
             setError('ID de usuario inválido');
             setLoading(false);
             return;
@@ -73,28 +46,48 @@ function PerfilPage() {
             setLoading(true);
             setError(null);
 
-            console.log('📥 [PerfilPage] Iniciando carga del perfil...');
-            console.log('📥 [PerfilPage] Usuario ID a cargar:', usuarioId);
+            console.log('📥 [PerfilPage] Cargando perfil del usuario:', usuarioId);
 
             const [datosUsuario, datosPublicaciones] = await Promise.all([
                 obtenerUsuarioPorId(usuarioId),
                 obtenerPublicacionesPorUsuario(usuarioId)
             ]);
 
-            console.log('✅ [PerfilPage] Datos cargados exitosamente');
-            console.log('✅ [PerfilPage] Usuario:', datosUsuario);
-            console.log('✅ [PerfilPage] Publicaciones:', datosPublicaciones.length);
+            console.log('✅ [PerfilPage] Usuario cargado:', datosUsuario);
+            console.log('📸 [PerfilPage] FotoUrl:', datosUsuario.fotoUrl);
 
             setUsuario(datosUsuario);
             setPublicaciones(datosPublicaciones.sort((a, b) =>
                 new Date(b.fechaCreacion) - new Date(a.fechaCreacion)
             ));
+
+            // ✅ NUEVO: Forzar recarga de imagen incrementando avatarKey
+            setAvatarKey(prev => prev + 1);
+            console.log('🔄 [PerfilPage] Recargando imagen de avatar');
+
         } catch (error) {
-            console.error('❌ [PerfilPage] Error al cargar perfil:', error);
+            console.error('❌ Error al cargar perfil:', error);
             setError('No se pudo cargar el perfil del usuario');
         } finally {
             setLoading(false);
         }
+    };
+
+    /**
+     * ✅ NUEVO: Función para construir URL con cache busting
+     * Agrega timestamp a la URL de la foto para forzar recarga
+     */
+    const getAvatarUrlConTimestamp = (fotoUrl, nombre) => {
+        if (!fotoUrl) {
+            return getAvatarUrl(null, nombre);
+        }
+
+        // Si ya tiene parámetro, agregar con &
+        if (fotoUrl.includes('?')) {
+            return `${fotoUrl}&t=${Date.now()}`;
+        }
+        // Si no tiene parámetro, agregar con ?
+        return `${fotoUrl}?t=${Date.now()}`;
     };
 
     if (loading) {
@@ -146,10 +139,13 @@ function PerfilPage() {
                         <div className="perfil-info-principal">
                             <div className="perfil-avatar-container">
                                 <img
-                                    src={usuario.fotoUrl || usuario.fotoBase64 || defaultAvatar}
+                                    key={avatarKey} // ✅ NUEVO: Key para forzar re-render
+                                    src={getAvatarUrlConTimestamp(usuario.fotoUrl, usuario.nombre)} // ✅ USAR URL CON TIMESTAMP
                                     alt={usuario.nombre}
                                     className="perfil-avatar-grande"
-                                    onError={(e) => { e.target.src = defaultAvatar; }}
+                                    onError={(e) => {
+                                        e.target.src = getAvatarUrl(null, usuario.nombre);
+                                    }}
                                 />
                             </div>
 

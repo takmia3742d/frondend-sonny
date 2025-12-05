@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ IMPORTAR
+import { useNavigate } from 'react-router-dom';
 import { obtenerUsuarios } from '../../api/usuarios';
 import { useAuth } from '../../hooks/useAuth';
+import { getAvatarUrl } from '../../utils/imageUtils'; // ✅ IMPORTAR
 import '../../styles/mensajes.css';
 
 function ListaConversaciones({ onSeleccionarUsuario, usuarioSeleccionado }) {
     const { usuario: usuarioActual } = useAuth();
-    const navigate = useNavigate(); // ✅ NUEVO
+    const navigate = useNavigate();
     const [usuarios, setUsuarios] = useState([]);
     const [busqueda, setBusqueda] = useState('');
 
@@ -28,16 +29,16 @@ function ListaConversaciones({ onSeleccionarUsuario, usuarioSeleccionado }) {
         u.nombre.toLowerCase().includes(busqueda.toLowerCase())
     );
 
-    const defaultAvatar = (nombre) =>
-        'https://ui-avatars.com/api/?name=' + encodeURIComponent(nombre || 'Usuario');
-
-    // ✅ NUEVA FUNCIÓN
+    /**
+     * ✅ CORREGIDO: Usar getAvatarUrl() en lugar de defaultAvatar
+     * getAvatarUrl() maneja correctamente:
+     * - Fotos reales con timestamp (cache busting)
+     * - Fallback a placeholder con iniciales
+     */
     const handleClickUsuario = (usuario, e) => {
-        // Si hace clic en el avatar, va al perfil
         if (e.target.tagName === 'IMG') {
             navigate(`/perfil/${usuario.id}`);
         } else {
-            // Si hace clic en cualquier otra parte, abre el chat
             onSeleccionarUsuario(usuario);
         }
     };
@@ -64,14 +65,17 @@ function ListaConversaciones({ onSeleccionarUsuario, usuarioSeleccionado }) {
                         <div
                             key={usuario.id}
                             className={`conversacion-item ${usuarioSeleccionado?.id === usuario.id ? 'active' : ''}`}
-                            onClick={(e) => handleClickUsuario(usuario, e)} // ✅ ACTUALIZAR
+                            onClick={(e) => handleClickUsuario(usuario, e)}
                         >
+                            {/* ✅ CORREGIDO: Usar getAvatarUrl() */}
                             <img
-                                src={usuario.fotoUrl || defaultAvatar(usuario.nombre)}
+                                src={getAvatarUrl(usuario.fotoUrl, usuario.nombre)}
                                 alt={usuario.nombre}
                                 className="conversacion-avatar"
-                                style={{ cursor: 'pointer' }} // ✅ AGREGAR
-                                onError={(e) => { e.target.src = defaultAvatar(usuario.nombre); }}
+                                style={{ cursor: 'pointer' }}
+                                onError={(e) => {
+                                    e.target.src = getAvatarUrl(null, usuario.nombre);
+                                }}
                             />
                             <div className="conversacion-info">
                                 <h4>{usuario.nombre}</h4>

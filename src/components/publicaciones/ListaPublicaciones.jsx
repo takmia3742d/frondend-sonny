@@ -21,13 +21,14 @@ function ListaPublicaciones({ publicaciones, loading, onActualizar }) {  // ✅ 
     }
 
     return (
-        <div className="lista-publicaciones">
+        <div className="publicaciones-list">
             {publicaciones.map((publicacion) => (
-                <PublicacionCard
-                    key={publicacion.id}
-                    publicacion={publicacion}
-                    onActualizar={onActualizar}  // ✅ PASAR onActualizar
-                />
+                <div key={publicacion.id} className="publicacion-card-container">
+                    <PublicacionCard
+                        publicacion={publicacion}
+                        onActualizar={onActualizar}
+                    />
+                </div>
             ))}
         </div>
     );

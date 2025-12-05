@@ -1,21 +1,20 @@
-/* Contenedor de comentarios */
+/* COMENTARIOS - ALINEADOS A LA IZQUIERDA */
 .lista-comentarios {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #f0f0f0;
+    margin-top: 8px;
+    padding: 8px 16px 12px;
+    border-top: 1px solid #e4e6eb;
 }
 
-/* Formulario de comentario */
 .form-comentario {
     display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 8px;
+    margin-bottom: 12px;
     align-items: flex-start;
 }
 
 .comentario-avatar {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
@@ -25,8 +24,8 @@
     flex: 1;
     display: flex;
     gap: 8px;
-    background: #f0f0f0;
-    border-radius: 20px;
+    background: #f0f2f5;
+    border-radius: 18px;
     padding: 8px 12px;
     align-items: center;
 }
@@ -36,32 +35,34 @@
     background: transparent;
     border: none;
     outline: none;
-    font-size: 14px;
+    font-size: 15px;
     font-family: inherit;
+    color: #050505;
 }
 
 .form-comentario-input::placeholder {
-    color: #999;
+    color: #65676b;
 }
 
 .btn-enviar-comentario {
     background: transparent;
     border: none;
-    color: #667eea;
+    color: #1877f2;
     font-size: 18px;
     cursor: pointer;
     padding: 0;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    transition: background 0.3s;
+    transition: background 0.2s;
+    flex-shrink: 0;
 }
 
 .btn-enviar-comentario:hover:not(:disabled) {
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(24, 119, 242, 0.1);
 }
 
 .btn-enviar-comentario:disabled {
@@ -70,118 +71,105 @@
 }
 
 .comentario-error {
-    color: #c33;
+    color: #ef4444;
     font-size: 12px;
-    margin-left: 46px;
-    margin-top: -10px;
+    margin-left: 40px;
+    margin-top: -8px;
+    text-align: left; /* ✅ Alineado a la izquierda */
 }
 
-/* Lista de comentarios */
 .comentarios-contenedor {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .comentario-item {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: flex-start;
+    text-align: left; /* ✅ Alineado a la izquierda */
+}
+
+.comentario-contenido-wrapper {
+    flex: 1;
+    min-width: 0;
+    text-align: left; /* ✅ Alineado a la izquierda */
 }
 
 .comentario-contenido {
-    flex: 1;
-    background: #f0f0f0;
-    border-radius: 16px;
-    padding: 10px 14px;
+    background: #f0f2f5;
+    border-radius: 18px;
+    padding: 8px 12px;
+    text-align: left; /* ✅ Alineado a la izquierda */
+    display: inline-block;
+    max-width: 100%;
 }
 
-.comentario-header {
+.comentario-contenido h5 {
+    margin: 0 0 2px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #050505;
+    text-align: left; /* ✅ Alineado a la izquierda */
+}
+
+.comentario-contenido p {
+    margin: 0;
+    font-size: 15px;
+    color: #050505;
+    line-height: 1.3333;
+    word-wrap: break-word;
+    text-align: left; /* ✅ Alineado a la izquierda */
+}
+
+.comentario-footer {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 4px;
-}
-
-.comentario-autor {
-    font-weight: 600;
-    font-size: 14px;
-    color: #333;
+    gap: 12px;
+    margin-top: 2px;
+    padding-left: 12px;
 }
 
 .comentario-fecha {
     font-size: 12px;
-    color: #999;
-}
-
-.comentario-texto {
-    margin: 0;
-    font-size: 14px;
-    color: #333;
-    line-height: 1.4;
-    word-wrap: break-word;
-}
-
-/* Estados */
-.comentarios-loading {
-    text-align: center;
-    color: #999;
-    padding: 20px;
-    font-size: 14px;
-}
-
-.sin-comentarios {
-    text-align: center;
-    color: #999;
-    padding: 20px;
-    font-size: 14px;
-    margin: 0;
-}
-
-/* Botón ver más */
-.btn-ver-mas-comentarios {
-    background: transparent;
-    border: none;
-    color: #667eea;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 10px;
-    margin-top: 10px;
-    width: 100%;
-    text-align: left;
-    transition: opacity 0.3s;
-}
-
-.btn-ver-mas-comentarios:hover {
-    opacity: 0.7;
-}
-/* Botón eliminar comentario */
-.comentario-footer {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 4px;
+    color: #65676b;
+    text-align: left; /* ✅ Alineado a la izquierda */
 }
 
 .btn-eliminar-comentario {
     background: transparent;
     border: none;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     opacity: 0.6;
-    transition: all 0.3s;
-    padding: 4px 8px;
+    transition: all 0.2s;
+    padding: 2px 6px;
     border-radius: 4px;
+    color: #65676b;
 }
 
 .btn-eliminar-comentario:hover:not(:disabled) {
     opacity: 1;
-    background: #fee;
-    transform: scale(1.1);
+    background: #f0f2f5;
 }
 
 .btn-eliminar-comentario:disabled {
     cursor: not-allowed;
     opacity: 0.3;
+}
+
+.comentarios-loading {
+    text-align: center;
+    color: #65676b;
+    padding: 16px;
+    font-size: 14px;
+}
+
+.sin-comentarios {
+    text-align: center;
+    color: #65676b;
+    padding: 16px;
+    font-size: 14px;
+    margin: 0;
 }

@@ -40,9 +40,13 @@ function LoginForm() {
     return (
         <div className="auth-container">
             <div className="auth-card">
-                {/* Logo opcional */}
+                {/* ✅ Logo con imagen hoja circular */}
                 <div className="auth-logo">
-
+                    <img
+                        src="/images/hoja.png"
+                        alt="SociaNet Logo"
+                        className="auth-logo-img"
+                    />
                 </div>
 
                 <h2>Iniciar Sesión</h2>
@@ -85,6 +89,8 @@ function LoginForm() {
                         {loading ? 'Iniciando' : 'Iniciar Sesión'}
                     </button>
                 </form>
+
+                <div className="auth-divider">o</div>
 
                 <p className="auth-footer">
                     ¿No tienes cuenta?{' '}

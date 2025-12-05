@@ -40,10 +40,11 @@ function HomePage() {
         <div className="home-page">
             <Navbar />
 
+            {/* ✅ Sidebar FUERA del home-container */}
+            <Sidebar />
+
+            {/* ✅ Contenedor solo para el feed */}
             <div className="home-container">
-
-                <Sidebar />
-
                 <div className="feed-container">
                     <CrearPublicacion onPublicacionCreada={handlePublicacionCreada} />
 

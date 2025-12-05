@@ -1,49 +1,61 @@
 import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { actualizarPerfil } from '../../api/usuarios';
+import { getAvatarUrl } from '../../utils/imageUtils';
 import '../../styles/editar-perfil.css';
 
 function EditarPerfilModal({ onCerrar, onActualizar }) {
-    const { usuario, login } = useAuth();
+    const { usuario, updateUser } = useAuth();
+
+    if (!usuario) {
+        return (
+            <div className="modal-overlay" onClick={onCerrar}>
+                <div className="modal-editar-perfil" onClick={(e) => e.stopPropagation()}>
+                    <p>⚠️ Error: Usuario no identificado</p>
+                    <button onClick={onCerrar}>Cerrar</button>
+                </div>
+            </div>
+        );
+    }
+
     const [formData, setFormData] = useState({
-        nombre: usuario?.nombre || '',
-        email: usuario?.email || '',
-        bio: usuario?.bio || '',
-        foto: null // ✅ Ahora es un archivo, no URL
+        nombre: usuario.nombre || '',
+        email: usuario.email || '',
+        bio: usuario.bio || '',
+        foto: null
     });
-    const [previewUrl, setPreviewUrl] = useState(usuario?.fotoUrl || '');
+    const [previewUrl, setPreviewUrl] = useState(getAvatarUrl(usuario.fotoUrl, usuario.nombre));
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
-    // ✅ MANEJAR SELECCIÓN DE ARCHIVO
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // Validar que sea imagen
             if (!file.type.startsWith('image/')) {
                 setError('Por favor selecciona una imagen válida');
                 return;
             }
 
-            // Validar tamaño (máximo 5MB)
             if (file.size > 5 * 1024 * 1024) {
                 setError('La imagen no debe pesar más de 5MB');
                 return;
             }
 
-            setFormData({
-                ...formData,
+            setError('');
+            setFormData(prev => ({
+                ...prev,
                 foto: file
-            });
+            }));
 
-            // Crear preview
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreviewUrl(reader.result);
@@ -55,6 +67,7 @@ function EditarPerfilModal({ onCerrar, onActualizar }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setSuccess('');
 
         if (!formData.nombre.trim()) {
             setError('El nombre es obligatorio');
@@ -68,24 +81,33 @@ function EditarPerfilModal({ onCerrar, onActualizar }) {
 
         setLoading(true);
         try {
-            console.log('📤 Actualizando perfil:', formData);
+            console.log('📤 [EditarPerfilModal] Actualizando perfil:', {
+                usuarioId: usuario.id,
+                nombre: formData.nombre,
+                email: formData.email,
+                bio: formData.bio,
+                tieneArchivo: !!formData.foto
+            });
 
             const usuarioActualizado = await actualizarPerfil(usuario.id, formData);
 
-            console.log('✅ Perfil actualizado:', usuarioActualizado);
+            console.log('✅ [EditarPerfilModal] Perfil actualizado:', usuarioActualizado);
+            console.log('📸 FotoUrl recibida:', usuarioActualizado.fotoUrl);
 
-            // Actualizar el contexto de autenticación
-            await login({ email: formData.email, password: 'dummy' }, true, usuarioActualizado);
+            // ✅ Actualizar contexto con usuario modificado
+            updateUser(usuarioActualizado);
 
-            // Guardar en localStorage manualmente
-            localStorage.setItem('usuario', JSON.stringify(usuarioActualizado));
+            setSuccess('✅ Perfil actualizado exitosamente');
 
-            if (onActualizar) onActualizar();
-            onCerrar();
+            // ✅ Esperar a que se actualice y luego cerrar
+            setTimeout(() => {
+                console.log('🔄 [EditarPerfilModal] Llamando onActualizar para recargar perfil');
+                if (onActualizar) onActualizar();
+                onCerrar();
+            }, 1000);
 
-            alert('Perfil actualizado exitosamente');
         } catch (err) {
-            console.error('❌ Error al actualizar perfil:', err);
+            console.error('❌ [EditarPerfilModal] Error:', err);
             setError(err.message || 'Error al actualizar perfil');
         } finally {
             setLoading(false);
@@ -100,7 +122,8 @@ function EditarPerfilModal({ onCerrar, onActualizar }) {
                     <button className="btn-cerrar-x" onClick={onCerrar}>✕</button>
                 </div>
 
-                {error && <div className="error-message">{error}</div>}
+                {error && <div className="error-message" style={{ color: '#ff4444' }}>❌ {error}</div>}
+                {success && <div className="success-message" style={{ color: '#44ff44' }}>{success}</div>}
 
                 <form onSubmit={handleSubmit} className="form-editar-perfil">
                     <div className="form-group">
@@ -144,7 +167,6 @@ function EditarPerfilModal({ onCerrar, onActualizar }) {
                         />
                     </div>
 
-                    {/* ✅ NUEVO: SELECTOR DE ARCHIVO */}
                     <div className="form-group">
                         <label htmlFor="foto">Foto de perfil</label>
                         <input
@@ -165,8 +187,7 @@ function EditarPerfilModal({ onCerrar, onActualizar }) {
                                     src={previewUrl}
                                     alt="Preview"
                                     onError={(e) => {
-                                        e.target.src = 'https://ui-avatars.com/api/?name=' +
-                                            encodeURIComponent(formData.nombre || 'Usuario');
+                                        e.target.src = getAvatarUrl(null, formData.nombre || 'Usuario');
                                     }}
                                 />
                             </div>
@@ -187,7 +208,7 @@ function EditarPerfilModal({ onCerrar, onActualizar }) {
                             className="btn-guardar"
                             disabled={loading}
                         >
-                            {loading ? 'Guardando...' : 'Guardar Cambios'}
+                            {loading ? '⏳ Guardando...' : '✅ Guardar Cambios'}
                         </button>
                     </div>
                 </form>

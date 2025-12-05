@@ -79,6 +79,14 @@ export function AuthProvider({ children }) {
         }
     };
 
+    // ✅ NUEVA: Actualizar usuario (para cambios de perfil, etc)
+    const updateUser = (usuarioActualizado) => {
+        console.log('🔄 [AuthContext] Actualizando usuario en contexto:', usuarioActualizado);
+        setUsuario(usuarioActualizado);
+        saveUser(usuarioActualizado);
+        console.log('✅ [AuthContext] Usuario actualizado en estado y localStorage');
+    };
+
     // Logout
     const logout = () => {
         console.log('👋 [AuthContext] Cerrando sesión');
@@ -98,6 +106,7 @@ export function AuthProvider({ children }) {
                 register,
                 login,
                 logout,
+                updateUser, // ✅ NUEVA FUNCIÓN
                 isAuthenticated: !!usuario,
             }}
         >
